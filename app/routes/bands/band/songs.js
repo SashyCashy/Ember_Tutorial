@@ -5,6 +5,7 @@ export default Ember.Route.extend({
   model: function() {
     return this.modelFor('bands.band');
   },
+  
   actions: {
     createSong: function() {
       var band=this.modelFor('bands.band');
@@ -14,11 +15,6 @@ export default Ember.Route.extend({
       band.get('songs').pushObject(song);
       this.get('controller').set('song_name','');
     },
-    updateRating: function(params) {
-      var song = params.item,
-      rating = params.rating;
-      song.set('rating', rating);
-      //alert(rating);
-    }
+
   }
 });

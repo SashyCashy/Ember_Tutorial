@@ -1,14 +1,24 @@
 <div class="row list-wrapper">
-  <ul class="list-group songs">
-    <li class="list-group-item">
-      {{input type="text" class="new-song" placeholder="New Song" value=song_name}}
-      <button class="btn btn-primary btn-sm new-song-button" {{action "createSong"}}> Add </button>
-    </li>
-    {{#each model.songs as |song|}}
+  <div class="list-group songs">
+
+    {{#if noSongs}}
+      <div class="list-group-item empty-list">
+        <div class="empty-message">
+          There are no songs yet. Why don't you <a href="#" {{action "enableSongCreation"}}> create one? </a></div>
+      </div>
+      {{else}}
       <li class="list-group-item">
-        {{song.title}}
-        {{star-rating item=song rating=song.rating setAction="updateRating"}}
+        <form {{action "createSong" on="submit"}}>
+        {{input type="text" class="new-song" placeholder="New Song" value=song_name}}
+        <button type="submit" class="btn btn-primary btn-sm new-song-button"> Add </button>
+      </form>
       </li>
-    {{/each}}
-  </ul>
+      {{#each model.songs as |song|}}
+        <li class="list-group-item">
+          {{song.title}}
+          {{star-rating item=song rating=song.rating setAction="updateRating"}}
+        </li>
+      {{/each}}
+    {{/if}}
+  </div>
 </div>
