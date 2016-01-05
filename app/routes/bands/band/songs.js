@@ -12,13 +12,16 @@ export default Ember.Route.extend({
       document.title = `${band.get('name')} songs - Rock & Roll`;
     },
     createSong: function() {
-      var band=this.modelFor('bands.band');
-      var song_name = this.get('controller').get('song_name');
-      var band_name = band.get('name');
-      var song = Song.create({ title:  song_name, band: band_name });
-      band.get('songs').pushObject(song);
-      this.get('controller').set('song_name','');
-    },
+      var controller=this.get('controller');
+          band=this.modelFor('bands.band');
+        var song_name = this.store.createRecord('song',{
+          title:  controller.get('song_name'),
+          band: band
+        });
 
-  }
+        song.save().then(function() {
+          controller.set('song_name','');
+        });
+      },
+    }
 });

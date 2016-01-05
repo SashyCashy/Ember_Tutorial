@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import Band from '../models/band';
-import Song from '../models/song';
 
-var blackDog = Song.create({
+
+/*var blackDog = Song.create({
   title: 'Black Dog',
   band: 'Led Zeppelin',
   rating: 3
@@ -41,21 +40,28 @@ sortedContent: Ember.computed.sort('content', 'sortProperties'),
 
 var bands = BandsCollection.create();
 bands.get('content').pushObjects([ledZeppelin,pearlJam,fooFighters]);
+*/
 
 export default Ember.Route.extend({
   model: function() {
-    return bands;
+    return this.store.findAll('band');
   },
   actions:  {
     didTransition:  function(){
-      document.title = 'Bands- Rock & Roll EmberJS'
+      document.title = 'Bands- Rock & Roll EmberJS';
     },
     createBand: function() {
-      var name = this.get('controller').get('band_name');
-      var band = Band.create({name: name });
+      var controller = this.get('controller');
+      var name = controller.get('band_name');
+      /*var band = Band.create({name: name });
       bands.get('content').pushObject(band);
       this.get('controller').set('band_name','');
-      this.transitionTo('bands.band.songs', band);
+      this.transitionTo('bands.band.songs', band);*/
+      var band = this.store.createRecord('band',controller.getProperties('name'));
+      band.save().then(function() {
+        controller.set('band_name', '');
+        this.transitionTo('bands.band.songs', band);
+      });
     },
 
   }
