@@ -1,6 +1,6 @@
 export default Ember.Object.extend({
   name: '',
-
+  description: '',
   slug: function() {
     return this.get('name').dasherize();
   }.property('name'),
