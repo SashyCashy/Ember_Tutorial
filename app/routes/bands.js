@@ -19,14 +19,17 @@ var pretender = Song.create({
 });
 var ledZeppelin = Band.create({
   name: 'Led Zeppelin',
+  // description: 'Led Zeppelin band',
   songs:  [blackDog]
 });
 var pearlJam = Band.create({
   name: 'Pearl Jam',
+  description: 'Pearl Jam is an American rock band, formed in Seattle, Washington in 1990.',
   songs:  [yellowLedbetter]
 });
 var fooFighters = Band.create({
   name: ' The Foo Fighters',
+  description:  'This is FooFighters',
   songs:  [pretender]
 });
 
@@ -44,6 +47,9 @@ export default Ember.Route.extend({
     return bands;
   },
   actions:  {
+    didTransition:  function(){
+      document.title = 'Bands- Rock & Roll EmberJS'
+    },
     createBand: function() {
       var name = this.get('controller').get('band_name');
       var band = Band.create({name: name });

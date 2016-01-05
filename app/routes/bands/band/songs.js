@@ -5,8 +5,12 @@ export default Ember.Route.extend({
   model: function() {
     return this.modelFor('bands.band');
   },
-  
+
   actions: {
+    didTransition:  function(){
+      var band = this.modelFor('bands.band');
+      document.title = `${band.get('name')} songs - Rock & Roll`;
+    },
     createSong: function() {
       var band=this.modelFor('bands.band');
       var song_name = this.get('controller').get('song_name');
